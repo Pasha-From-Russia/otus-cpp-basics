@@ -2,7 +2,7 @@
 #include <cmath>
 
 class Point {
-  public:
+public:
     Point() = default;
     inline Point(double x, double y) : x{x}, y{y} {};
     double x{};

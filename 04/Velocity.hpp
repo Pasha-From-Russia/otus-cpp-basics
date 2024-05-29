@@ -3,7 +3,7 @@
 #include <cmath>
 
 class Velocity {
-  public:
+public:
     inline Velocity() = default;
 
     // TODO: комментарии
@@ -25,6 +25,6 @@ class Velocity {
         return vec;
     }
 
-  private:
+private:
     Point vec;
 };
