@@ -116,6 +116,15 @@ void testLinkedListContainer() {
             << llc
             << std::endl);
     llc.clear();
+
+    TRY("test push_back()->pop_front(): ",
+        llc.push_back(0);
+        llc.pop_front();
+        std::cout << "ok" << std::endl);
+
+    TRY("test copy constructor: ",
+        auto a = llc;
+        std::cout << "ok" << std::endl);
 }
 
 
@@ -211,6 +220,15 @@ void testSerialContainer() {
             << sc
             << std::endl);
     sc.clear();
+
+    TRY("test push_back()->pop_front(): ",
+        sc.push_back(0);
+        sc.pop_front();
+        std::cout << "ok" << std::endl);
+
+    TRY("test copy constructor: ",
+        auto a = sc;
+        std::cout << "ok" << std::endl);
 }
 
 int main() {

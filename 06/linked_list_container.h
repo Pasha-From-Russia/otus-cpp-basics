@@ -49,11 +49,29 @@ public:
         LLNode<T> *node_ptr_;
     };
 
+    // Конструктор
     LinkedListContainer() :
             lastNode_{ nullptr },
             capacity_{ 0 } {
     }
 
+    // Копирующий конструктор
+    LinkedListContainer(const LinkedListContainer &container) : LinkedListContainer() {
+
+        if (container.arrayEntry_.next == nullptr) {
+            return;
+        }
+
+        LLNode<T>* currnode = container.arrayEntry_.next;
+        while (currnode != nullptr) {
+            push_back(currnode->data);
+            currnode = currnode->next;
+        }
+
+        capacity_ = container.capacity_;
+    }
+
+    // Деструктор
     ~LinkedListContainer() {
         clear();
     }
@@ -72,6 +90,7 @@ public:
         }
         capacity_ = 0;
         arrayEntry_.next = nullptr;
+        lastNode_ = nullptr;
     }
 
     // вставить элемент в конец

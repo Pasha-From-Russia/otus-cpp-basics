@@ -38,11 +38,26 @@ public:
         T *ptr_;
     };
 
+    // Конструктор
     SerialContainer() :
             data_{ nullptr },
             capacity_{ 0 } {
     }
 
+    // Копирующий конструктор.
+    SerialContainer(const SerialContainer &container) : SerialContainer() {
+
+        if (container.data_ == nullptr) {
+            return;
+        }
+
+        data_ = new T[container.capacity_];
+        std::copy(container.data_, container.data_ + capacity_, data_);
+
+        capacity_ = container.capacity_;
+    }
+
+    // Деструктор
     ~SerialContainer() {
         clear();
     }
@@ -60,7 +75,7 @@ public:
     void push_back(T t_value) {
         T *data_new = new T[capacity_ + 1];
         if (data_) {
-            std::memcpy(data_new, data_, capacity_ * sizeof(T));
+            std::copy(data_, data_ + capacity_, data_new);
             delete [] data_;
         }
         data_new[capacity_] = t_value;
@@ -76,7 +91,7 @@ public:
         T ret = data_[capacity_ - 1];
         --capacity_;
         T *data_new = new T[capacity_];
-        std::memcpy(data_new, data_, capacity_ * sizeof(T));
+        std::copy(data_, data_ + capacity_, data_new);
         delete [] data_;
         data_ = data_new;
         return ret;
@@ -87,7 +102,7 @@ public:
         T *data_new = new T[capacity_ + 1];
         data_new[0] = t_value;
         if (data_) {
-            std::memcpy(&data_new[1], data_, capacity_ * sizeof(T));
+            std::copy(data_, data_ + capacity_, data_new + 1);
             delete [] data_;
         }
         data_ = data_new;
@@ -102,7 +117,7 @@ public:
         T ret = data_[0];
         --capacity_;
         T *data_new = new T[capacity_];
-        std::memcpy(data_new, &data_[1], capacity_ * sizeof(T));
+        std::copy(data_ + 1, data_ + capacity_ + 1, data_new);
         delete [] data_;
         data_ = data_new;
         return ret;
@@ -127,9 +142,9 @@ public:
         T *data_new = new T[capacity_ + 1];
         data_new[t_pos] = t_value;
         if (t_pos > 0) {
-            std::memcpy(data_new, data_, t_pos * sizeof(T));
+            std::copy(data_, data_ + t_pos, data_new);
         }
-        std::memcpy(&data_new[t_pos + 1], &data_[t_pos], (capacity_ - t_pos) * sizeof(T));
+        std::copy(data_ + t_pos, data_ + capacity_, data_new + t_pos + 1);
         delete [] data_;
         data_ = data_new;
         ++capacity_;
@@ -149,10 +164,10 @@ public:
         }
         T *data_new = new T[capacity_ - 1];
         if (t_pos > 0) {
-            std::memcpy(data_new, data_, t_pos * sizeof(T));
+            std::copy(data_, data_ + t_pos, data_new);
         }
         if (t_pos != capacity_) {
-            std::memcpy(&data_new[t_pos], &data_[t_pos + 1], (capacity_ - t_pos) * sizeof(T));
+            std::copy(data_ + t_pos + 1, data_ + capacity_, data_new + t_pos);
         }
         delete [] data_;
         data_ = data_new;
