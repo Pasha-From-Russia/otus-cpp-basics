@@ -146,6 +146,7 @@ public:
             // первый элемент
             arrayEntry_.next = nullptr;
             lastNode_ = nullptr;
+            delete ln;
             capacity_ = 0;
         }
         return ret;
